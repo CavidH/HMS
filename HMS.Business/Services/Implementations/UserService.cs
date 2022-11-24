@@ -3,6 +3,7 @@ using HMS.Business.Exceptions;
 using HMS.Business.Services.Interfaces;
 using HMS.Business.ViewModels;
 using HMS.Core.Entities;
+using HMS.Core.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace HMS.Business.Services.Implementations
@@ -58,6 +59,19 @@ namespace HMS.Business.Services.Implementations
             await _signInManager.SignInAsync(newUser, isPersistent: userRegisterVm.StayLoggedIn);
 
             // return RedirectToAction("Index", "Home");
+        }
+
+        public async Task CreateRollAsync()
+        {
+            foreach (var UserRole in Enum.GetValues(typeof(UserRoles)))
+            {
+                if (!await _roleManager.RoleExistsAsync(UserRole.ToString()))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole { Name = UserRole.ToString() });
+                }
+            }
+
+            Console.WriteLine("role done");
         }
 
 

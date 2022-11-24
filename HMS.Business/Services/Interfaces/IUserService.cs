@@ -13,6 +13,8 @@ namespace HMS.Business.Services.Interfaces
         //Task<Paginate<ApplicationUser>> GetAllPaginatedAsync(int page);
         Task Login(UserLoginVM userLoginVm);
         Task LogOut();
+
+        Task CreateRollAsync();
         //Task<ApplicationUser> GetAsync(int id);
         Task CreateAsync(UserRegisterVM userRegisterVm);
         //Task Update(int id, UserPostVM userPostVM);

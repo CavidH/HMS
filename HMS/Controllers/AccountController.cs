@@ -24,8 +24,8 @@ namespace HMS.Controllers
         public async Task<IActionResult> Index(UserRegisterVM userRegisterVm)
         {
             if (!ModelState.IsValid) return View(userRegisterVm);
-                
-            
+
+
             var k = HttpContext.Items;
             try
             {
@@ -42,50 +42,18 @@ namespace HMS.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        
+        
+        
+    
 
-        // [HttpPost]
-        // public async Task<IActionResult> SignIn(UserPostVM postVm)
+        // public async Task<IActionResult> Roll()
         // {
-        //     await Register(postVm);
-        //     return RedirectToAction(nameof(Index));
+        //     await _unitOfWorkService.userService.CreateRollAsync();
+        //     return Content("Okeydir");
         // }
 
-        // [Authorize]
-        // public IActionResult Salam()
-        // {
-        //     return Content("salam");
-        // }
-
-        // [NonAction]
-        // public async Task<IActionResult> Register(UserPostVM userPostVM)
-        // {
-        //     try
-        //     {
-        //         _unitOfWorkService.userService.Create(userPostVM);
-        //     }
-        //     catch (RegisterExceptions ex)
-        //     {
-        //         Console.WriteLine(ex);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Console.WriteLine(ex);
-        //     }
-        //
-        //     return RedirectToAction(  "Index","Home");
-        //
-        //
-        // }
+        
+     
     }
 }
-
-// public class UserPostVM
-// {
-//     public string Name { get; set; }
-//     public string LastName { get; set; }
-//     public string UserName { get; set; }
-//     public string Email { get; set; }
-//     public string Password { get; set; }
-//     public string ConfirmPassword { get; set; }
-// }
-// }
