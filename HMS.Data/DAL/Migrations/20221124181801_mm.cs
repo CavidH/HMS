@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HMS.Data.DAL.Migrations
 {
-    public partial class mig1 : Migration
+    public partial class mm : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,7 @@ namespace HMS.Data.DAL.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Detail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActivated = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
@@ -201,15 +202,16 @@ namespace HMS.Data.DAL.Migrations
                 name: "DoctorSpecialities",
                 columns: table => new
                 {
-                    DoctorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SpecialityId = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DoctorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SpecialityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DoctorSpecialities", x => new { x.SpecialityId, x.DoctorId });
+                    table.PrimaryKey("PK_DoctorSpecialities", x => x.Id);
                     table.ForeignKey(
                         name: "FK_DoctorSpecialities_AspNetUsers_DoctorId",
                         column: x => x.DoctorId,
@@ -272,6 +274,11 @@ namespace HMS.Data.DAL.Migrations
                 name: "IX_DoctorSpecialities_DoctorId",
                 table: "DoctorSpecialities",
                 column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DoctorSpecialities_SpecialityId",
+                table: "DoctorSpecialities",
+                column: "SpecialityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

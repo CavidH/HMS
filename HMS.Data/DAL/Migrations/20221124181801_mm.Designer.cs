@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HMS.Data.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221124175250_mig1")]
-    partial class mig1
+    [Migration("20221124181801_mm")]
+    partial class mm
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,10 @@ namespace HMS.Data.DAL.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Detail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -134,26 +138,30 @@ namespace HMS.Data.DAL.Migrations
 
             modelBuilder.Entity("HMS.Core.Entities.DoctorSpeciality", b =>
                 {
-                    b.Property<int>("SpecialityId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("DoctorId")
-                        .HasColumnType("nvarchar(450)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<string>("DoctorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
-                    b.HasKey("SpecialityId", "DoctorId");
+                    b.Property<int>("SpecialityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("SpecialityId");
 
                     b.ToTable("DoctorSpecialities");
                 });

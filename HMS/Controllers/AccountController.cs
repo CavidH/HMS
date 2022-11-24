@@ -26,7 +26,7 @@ namespace HMS.Controllers
             if (!ModelState.IsValid) return View(userRegisterVm);
 
 
-             try
+            try
             {
                 await _unitOfWorkService.userService.CreateAsync(userRegisterVm);
             }
@@ -41,10 +41,10 @@ namespace HMS.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        
-        
-        
-    
+
+
+
+
 
         // public async Task<IActionResult> Roll()
         // {
@@ -52,7 +52,7 @@ namespace HMS.Controllers
         //     return Content("Okeydir");
         // }
 
-        
-     
+
+
     }
 }

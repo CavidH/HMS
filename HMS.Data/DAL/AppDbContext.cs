@@ -18,7 +18,7 @@ namespace HMS.Data.DAL
             builder.ApplyConfiguration(new AppUserConfig());
             builder.ApplyConfiguration(new DoctorPatientConfig());
             builder.ApplyConfiguration(new SpecialityConfig());
-            builder.ApplyConfiguration(new DoctorSpecialityConfig());
+            // builder.ApplyConfiguration(new DoctorSpecialityConfig());
 
 
 
