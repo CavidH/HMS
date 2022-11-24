@@ -30,6 +30,9 @@ namespace HMS.Data.DAL.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("BloodGroup")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -38,7 +41,6 @@ namespace HMS.Data.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Detail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -52,6 +54,9 @@ namespace HMS.Data.DAL.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActivated")
                         .HasColumnType("bit");
@@ -108,33 +113,45 @@ namespace HMS.Data.DAL.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("HMS.Core.Entities.Doctor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
+
+                    b.ToTable("Doctor");
+                });
+
             modelBuilder.Entity("HMS.Core.Entities.DoctorPatient", b =>
                 {
-                    b.Property<string>("PatientId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("DoctorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Id")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
 
                     b.HasKey("PatientId", "DoctorId");
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("DoctorPatients");
+                    b.ToTable("DoctorPatient");
                 });
 
-            modelBuilder.Entity("HMS.Core.Entities.DoctorSpeciality", b =>
+            modelBuilder.Entity("HMS.Core.Entities.Patient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,48 +159,16 @@ namespace HMS.Data.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DoctorId")
+                    b.Property<string>("AppUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("SpecialityId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
 
-                    b.HasIndex("SpecialityId");
-
-                    b.ToTable("DoctorSpecialities");
-                });
-
-            modelBuilder.Entity("HMS.Core.Entities.Speciality", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Speciality");
+                    b.ToTable("Patient");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -319,15 +304,26 @@ namespace HMS.Data.DAL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HMS.Core.Entities.Doctor", b =>
+                {
+                    b.HasOne("HMS.Core.Entities.AppUser", "AppUser")
+                        .WithOne("Doctor")
+                        .HasForeignKey("HMS.Core.Entities.Doctor", "AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("HMS.Core.Entities.DoctorPatient", b =>
                 {
-                    b.HasOne("HMS.Core.Entities.AppUser", "Doctor")
+                    b.HasOne("HMS.Core.Entities.Doctor", "Doctor")
                         .WithMany("DoctorPatients")
                         .HasForeignKey("DoctorId")
                         .IsRequired();
 
-                    b.HasOne("HMS.Core.Entities.AppUser", "Patient")
-                        .WithMany("PatientDoctors")
+                    b.HasOne("HMS.Core.Entities.Patient", "Patient")
+                        .WithMany("PatientDoctor")
                         .HasForeignKey("PatientId")
                         .IsRequired();
 
@@ -336,23 +332,15 @@ namespace HMS.Data.DAL.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("HMS.Core.Entities.DoctorSpeciality", b =>
+            modelBuilder.Entity("HMS.Core.Entities.Patient", b =>
                 {
-                    b.HasOne("HMS.Core.Entities.AppUser", "Doctor")
-                        .WithMany("DoctorSpecialities")
-                        .HasForeignKey("DoctorId")
+                    b.HasOne("HMS.Core.Entities.AppUser", "AppUser")
+                        .WithOne("Patient")
+                        .HasForeignKey("HMS.Core.Entities.Patient", "AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HMS.Core.Entities.Speciality", "Speciality")
-                        .WithMany("DoctorSpecialities")
-                        .HasForeignKey("SpecialityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Speciality");
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -408,16 +396,21 @@ namespace HMS.Data.DAL.Migrations
 
             modelBuilder.Entity("HMS.Core.Entities.AppUser", b =>
                 {
-                    b.Navigation("DoctorPatients");
+                    b.Navigation("Doctor")
+                        .IsRequired();
 
-                    b.Navigation("DoctorSpecialities");
-
-                    b.Navigation("PatientDoctors");
+                    b.Navigation("Patient")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("HMS.Core.Entities.Speciality", b =>
+            modelBuilder.Entity("HMS.Core.Entities.Doctor", b =>
                 {
-                    b.Navigation("DoctorSpecialities");
+                    b.Navigation("DoctorPatients");
+                });
+
+            modelBuilder.Entity("HMS.Core.Entities.Patient", b =>
+                {
+                    b.Navigation("PatientDoctor");
                 });
 #pragma warning restore 612, 618
         }

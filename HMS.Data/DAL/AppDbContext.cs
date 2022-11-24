@@ -17,7 +17,7 @@ namespace HMS.Data.DAL
 
             builder.ApplyConfiguration(new AppUserConfig());
             builder.ApplyConfiguration(new DoctorPatientConfig());
-            builder.ApplyConfiguration(new SpecialityConfig());
+            //builder.ApplyConfiguration(new SpecialityConfig());
             // builder.ApplyConfiguration(new DoctorSpecialityConfig());
 
 
@@ -27,8 +27,12 @@ namespace HMS.Data.DAL
             base.OnModelCreating(builder);
         }
 
-        public DbSet<DoctorPatient> DoctorPatients { get; set; }
-        public DbSet<Speciality> Speciality { get; set; }
-        public DbSet<DoctorSpeciality> DoctorSpecialities { get; set; }
+        public DbSet<Doctor> Doctor { get; set; }
+        public DbSet<Patient> Patient { get; set; }
+       public DbSet<DoctorPatient> DoctorPatient { get; set; }
+
+        //public DbSet<DoctorPatient> DoctorPatients { get; set; }
+        //public DbSet<Speciality> Speciality { get; set; }
+        //public DbSet<DoctorSpeciality> DoctorSpecialities { get; set; }
     }
 }

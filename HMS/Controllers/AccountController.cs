@@ -30,7 +30,7 @@ namespace HMS.Controllers
             {
                 await _unitOfWorkService.userService.CreateAsync(userRegisterVm);
             }
-            catch (RegisterExceptions ex)
+            catch (RegisterException ex)
             {
                 Console.WriteLine(ex);
             }
@@ -46,11 +46,11 @@ namespace HMS.Controllers
 
 
 
-        // public async Task<IActionResult> Roll()
-        // {
-        //     await _unitOfWorkService.userService.CreateRollAsync();
-        //     return Content("Okeydir");
-        // }
+        public async Task<IActionResult> Roll()
+        {
+            await _unitOfWorkService.userService.CreateRollAsync();
+            return Content("Okeydir");
+        }
 
 
 

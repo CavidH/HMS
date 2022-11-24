@@ -24,6 +24,18 @@ namespace HMS.Business.Services.Implementations
 
         public async Task CreateAsync(UserRegisterVM userRegisterVm)
         {
+            BloodGroup bloodGroup;
+            Gender gender;
+            UserRoles role;
+
+            if (!Enum.TryParse(userRegisterVm.BloodGroup, out bloodGroup))
+                throw new RegisterException("Blood Type Exception");
+            if (!Enum.TryParse(userRegisterVm.Gender, out gender))
+                throw new RegisterException("Gender Type Exception");
+            // if (!Enum.TryParse(userRegisterVm.Role, out role))
+            //     throw new RegisterException("Role Type Exception");
+
+
             AppUser newUser = new AppUser
             {
                 FirstName = userRegisterVm.FirstName,
@@ -31,7 +43,10 @@ namespace HMS.Business.Services.Implementations
                 UserName = userRegisterVm.UserName,
                 Email = userRegisterVm.Email,
                 IsActivated = true,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                Gender = gender,
+                BloodGroup = bloodGroup,
+                PhoneNumber = userRegisterVm.PhoneNumber,
             };
 
             IdentityResult identityResult = await _userManager.CreateAsync(newUser, userRegisterVm.Password);
@@ -46,8 +61,10 @@ namespace HMS.Business.Services.Implementations
                     //return Json(error.Description);
                 }
 
-                throw new RegisterExceptions(errorBuilder.ToString());
+                throw new RegisterException(errorBuilder.ToString());
             }
+
+            await _userManager.AddToRoleAsync(newUser, userRegisterVm.Role);
 
             // var Token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
             // var ConfirmationLink = Url.Action("ConfirmEmail", "Account",

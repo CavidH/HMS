@@ -8,7 +8,7 @@ namespace HMS.Data.ModelConfiguration
     {
         public void Configure(EntityTypeBuilder<DoctorPatient> builder)
         {
-             builder.HasKey(x => new { x.PatientId, x.DoctorId });
+            builder.HasKey(x => new { x.PatientId, x.DoctorId });
 
             builder.HasOne(p => p.Doctor)
                 .WithMany(dp => dp.DoctorPatients)
@@ -18,11 +18,11 @@ namespace HMS.Data.ModelConfiguration
 
 
             builder.HasOne(p => p.Patient)
-                .WithMany(cd => cd.PatientDoctors)
+                .WithMany(cd => cd.PatientDoctor)
                 .HasForeignKey(ci => ci.PatientId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-            builder.Property(p => p.IsDeleted).HasDefaultValue(false);
+            //builder.Property(p => p.IsDeleted).HasDefaultValue(false);
         }
     }
 }
