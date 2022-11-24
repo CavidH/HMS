@@ -26,7 +26,7 @@ namespace HMS.Business.Services.Implementations
         {
             AppUser newUser = new AppUser
             {
-                Name = userRegisterVm.FirstName,
+                FirstName = userRegisterVm.FirstName,
                 LastName = userRegisterVm.LastName,
                 UserName = userRegisterVm.UserName,
                 Email = userRegisterVm.Email,
