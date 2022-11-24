@@ -26,8 +26,7 @@ namespace HMS.Controllers
             if (!ModelState.IsValid) return View(userRegisterVm);
 
 
-            //var k = HttpContext.Items;
-            try
+             try
             {
                 await _unitOfWorkService.userService.CreateAsync(userRegisterVm);
             }
