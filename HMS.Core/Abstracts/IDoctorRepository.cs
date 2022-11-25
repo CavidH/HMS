@@ -2,7 +2,8 @@
 
 namespace HMS.Core.Abstracts
 {
-    public interface IDoctorRepository:IRepository<Doctor>
+    public interface IDoctorRepository : IRepository<Doctor>
     {
+        Task<List<Doctor>> GetPatientDoctorsAsync(string patientId);
     }
 }

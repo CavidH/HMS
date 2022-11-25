@@ -14,14 +14,18 @@ namespace HMS.Business.Services.Implementations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<Doctor>> GetAllAsync() => await _unitOfWork.DoctorRepository.GetAllAsync(null,"AppUser");
+        public async Task<List<Doctor>> GetAllAsync() =>
+            await _unitOfWork.DoctorRepository.GetAllAsync(p => p.AppUser.IsDeleted == false, "AppUser");
+
+        public async Task<List<Doctor>> GetPatientDoctorsAsync(string patientId) =>
+            await _unitOfWork.DoctorRepository.GetPatientDoctorsAsync(patientId);
 
 
         // {
         // List<Doctor> doctors = await _unitOfWork.DoctorRepository.GetAllPaginatedAsync(page, 5, null, "AppUser");
         // return new Paginate<List<Doctor>>() { Items = doctors, CurrentPage = page, PageCount = 5,AllPageCount = 45};
         // }
-         
+
         public Task CreateAsync()
         {
             throw new NotImplementedException();

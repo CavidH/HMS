@@ -23,6 +23,6 @@ namespace HMS.Data.Repositories
 
         public IDoctorPatientRepository DoctorPatientRepository => _doctorPatientRepository ??= new DoctorPatientRepository(_dbContext);
 
-        public async Task SaveAsync() => _dbContext.SaveChangesAsync();
+        public async Task SaveAsync() =>await _dbContext.SaveChangesAsync();
     }
 }

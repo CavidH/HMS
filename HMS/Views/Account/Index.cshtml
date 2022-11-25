@@ -12,6 +12,10 @@
 
         <input asp-for="UserName" placeholder="Enter your Username">
         <span asp-validation-for="UserName" class="text-danger"></span>
+        
+        @* <input asp-for="Detail" placeholder="Enter your Detail"> *@
+        <textarea  asp-for="Detail" cols="90" rows="5" placeholder="Enter your Detail"></textarea>
+        <span asp-validation-for="Detail"   class="text-danger"></span>
 
         <input asp-for="Email" placeholder="Enter your Email adress">
         <span asp-validation-for="Email" class="text-danger"></span>

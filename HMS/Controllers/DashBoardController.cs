@@ -31,6 +31,7 @@ namespace HMS.Controllers
             }
             catch (Exception ex)
             {
+                //todo log
             }
 
             return View(user);

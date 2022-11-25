@@ -8,7 +8,7 @@ namespace HMS.Core.Entities
         [Key]
         public int Id{ get; set; }
 
-        public bool IsDeleted { get; set; }
+       public bool IsDeleted { get; set; }
 
 
 

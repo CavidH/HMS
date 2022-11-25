@@ -8,7 +8,7 @@ namespace HMS.Data.ModelConfiguration
     {
         public void Configure(EntityTypeBuilder<DoctorPatient> builder)
         {
-            builder.Property(p => p.IsDeleted).HasDefaultValue(false);
+        builder.Property(p => p.IsDeleted).HasDefaultValue(false);
 
 
             builder.HasOne(p => p.Doctor)

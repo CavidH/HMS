@@ -46,6 +46,7 @@ namespace HMS.Business.Services.Implementations
                 LastName = userRegisterVm.LastName,
                 UserName = userRegisterVm.UserName,
                 Email = userRegisterVm.Email,
+                Detail = userRegisterVm.Detail,
                 IsActivated = true,
                 CreatedAt = DateTime.Now,
                 Gender = gender,
@@ -120,7 +121,7 @@ namespace HMS.Business.Services.Implementations
                 await _signInManager
                     .PasswordSignInAsync(user, userLoginVm.Password, userLoginVm.RememberMe, false);
             if (!signResult.Succeeded)
-                throw new LoginException(signResult.ToString());
+                throw new LoginException("wrong password");
         }
 
         public async Task LogOutAsync() => await _signInManager.SignOutAsync();

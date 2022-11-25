@@ -44,7 +44,7 @@ namespace HMS.Controllers
                 Log.Error(ex.Message);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "DashBoard");
         }
 
         [HttpGet]
@@ -60,16 +60,26 @@ namespace HMS.Controllers
         public async Task<IActionResult> Login(UserLoginVM userLoginVm)
         {
             if (!ModelState.IsValid)
-            {
                 return View(userLoginVm);
-            }
+
 
             try
             {
                 await _unitOfWorkService.UserService.LoginAsync(userLoginVm);
             }
+            catch (EmailNotFoundException ex)
+            {
+                ModelState.AddModelError("Email", ex.Message);
+                return View(userLoginVm);
+            }
+            catch (LoginException ex)
+            {
+                ModelState.AddModelError("Password", ex.Message);
+                return View(userLoginVm);
+            }
             catch (Exception e)
             {
+                //todo log
                 Console.WriteLine(e);
                 throw;
             }

@@ -68,10 +68,7 @@ namespace HMS.Data.Repositories.Implementations
             _context.Set<TEntity>().Remove(entity);
         }
 
-        //public async Task SaveAsync()
-        //{
-        //    await _context.SaveChangesAsync();
-        //}
+      
 
         private IQueryable<TEntity> CheckQuery(params string[] Includes)
         {

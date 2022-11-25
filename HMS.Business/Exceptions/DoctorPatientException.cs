@@ -1,6 +1,11 @@
-﻿namespace HMS.Business.Exceptions;
+﻿namespace HMS.Business.Exceptions{
 
-public class DoctorPatientException
-{
-    
+    public class DoctorPatientException : Exception
+    {
+        public DoctorPatientException(string msg) : base(msg)
+        {
+
+        }
+    }
+
 }
