@@ -2,6 +2,7 @@
 using HMS.Business.Services.Interfaces;
 using HMS.Business.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace HMS.Controllers
 {
@@ -35,11 +36,12 @@ namespace HMS.Controllers
             }
             catch (RegisterException ex)
             {
-                Console.WriteLine(ex);
+                ModelState.AddModelError("All", ex.Message);
+                return View(userRegisterVm);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Log.Error(ex.Message);
             }
 
             return RedirectToAction("Index", "Home");
@@ -57,8 +59,6 @@ namespace HMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLoginVM userLoginVm)
         {
-  
-            
             if (!ModelState.IsValid)
             {
                 return View(userLoginVm);

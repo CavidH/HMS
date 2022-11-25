@@ -13,30 +13,30 @@ using Serilog;
 using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
+
 #region Logger
 
-Log.Logger = new LoggerConfiguration()
-    //.MinimumLevel.Debug()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-    .Enrich.FromLogContext()
-    .WriteTo.File(
-        Path.Combine("Logs", "Log.txt"),
-        rollingInterval: RollingInterval.Day,
-        fileSizeLimitBytes: 10 * 1024 * 1024,
-        retainedFileCountLimit: 30,
-        rollOnFileSizeLimit: true,
-        shared: true,
-        flushToDiskInterval: TimeSpan.FromSeconds(2))
-    .WriteTo.Console()
-    //.WriteTo.Seq("http://localhost:5341")
-    .CreateLogger();
+builder.Host.UseSerilog((hostContext, services, configuration) =>
+{
+    configuration.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+        .Enrich.FromLogContext()
+        .WriteTo.File(
+            Path.Combine("Logs", "Log.txt"),
+            rollingInterval: RollingInterval.Day,
+            fileSizeLimitBytes: 10 * 1024 * 1024,
+            retainedFileCountLimit: 30,
+            rollOnFileSizeLimit: true,
+            shared: true,
+            flushToDiskInterval: TimeSpan.FromSeconds(2))
+        .WriteTo.Console();
+});
 
 #endregion
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
- 
+
 #region DataBase
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -105,6 +105,7 @@ builder.Services.AddFluentValidation(p =>
 #endregion
 
 #region UnitOfWork
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUnitOfWorkService, UnitOfWorkService>();
 

@@ -5,7 +5,6 @@ using HMS.Business.ViewModels;
 using HMS.Core.Abstracts;
 using HMS.Core.Entities;
 using HMS.Core.Enums;
-using HMS.Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 
 namespace HMS.Business.Services.Implementations
@@ -60,7 +59,7 @@ namespace HMS.Business.Services.Implementations
                 StringBuilder errorBuilder = new StringBuilder();
                 foreach (var error in identityResult.Errors)
                 {
-                    errorBuilder.Append(error);
+                    errorBuilder.Append(error.Description);
                     // errors.Add(error.Description);
                     // ModelState.AddModelError("", error.Description);
                     //return Json(error.Description);
@@ -69,15 +68,17 @@ namespace HMS.Business.Services.Implementations
                 throw new RegisterException(errorBuilder.ToString());
             }
 
-          //  await _userManager.AddToRoleAsync(newUser, userRegisterVm.Role);
-            await _userManager.AddToRoleAsync(newUser, UserRoles.Admin.ToString());
-           
+            await _userManager.AddToRoleAsync(newUser, userRegisterVm.Role);
+            /*   await _userManager.AddToRoleAsync(newUser, UserRoles.Admin.ToString());
+                For Admin Register
+                
+                */
             if (userRegisterVm.Role == UserRoles.Doctor.ToString())
             {
                 await _untiOfWork.DoctorRepository.CreateAsync(new Doctor { AppUserId = newUser.Id });
                 await _untiOfWork.SaveAsync();
             }
-            else if(userRegisterVm.Role == UserRoles.Patient.ToString())
+            else if (userRegisterVm.Role == UserRoles.Patient.ToString())
             {
                 await _untiOfWork.PatientRepository.CreateAsync(new Patient { AppUserId = newUser.Id });
                 await _untiOfWork.SaveAsync();
@@ -85,7 +86,6 @@ namespace HMS.Business.Services.Implementations
 
 
             await _signInManager.SignInAsync(newUser, isPersistent: userRegisterVm.StayLoggedIn);
-
         }
 
         public async Task<AppUser> GetUserByIdAsync(string id)
