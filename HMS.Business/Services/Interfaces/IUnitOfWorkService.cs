@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HMS.Business.Services.Implementations;
 
 namespace HMS.Business.Services.Interfaces
 {
     public interface IUnitOfWorkService
     {
-        public IUserService userService { get; }
+        public IUserService UserService { get; }
+        public IDoctorService DoctorService { get; }
+        public IDoctorPatientService DoctorPatientService { get; }
+        public IPatientService PatientService { get; }
     }
 }

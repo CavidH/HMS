@@ -12,6 +12,7 @@ namespace HMS.Core.Entities
         public BloodGroup BloodGroup { get; set; }
 
         public bool IsActivated { get; set; }
+        public bool IsDeleted { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public Doctor Doctor { get; set; }

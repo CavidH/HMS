@@ -13,6 +13,7 @@ namespace HMS.Data.ModelConfiguration
             builder.Property(p => p.LastName).IsRequired();
             builder.Property(p => p.PhoneNumber).IsRequired();
             builder.Property(p => p.Email).IsRequired();
+            builder.Property(p => p.IsDeleted).HasDefaultValue(false);
         }
     }
 }

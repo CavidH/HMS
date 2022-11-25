@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HMS.Data.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221124213435_asaa")]
-    partial class asaa
+    [Migration("20221125140008_Mig")]
+    partial class Mig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,6 +62,11 @@ namespace HMS.Data.DAL.Migrations
 
                     b.Property<bool>("IsActivated")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -113,6 +118,32 @@ namespace HMS.Data.DAL.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "87c397d1-6f89-49b0-a382-8a8896edee22",
+                            AccessFailedCount = 0,
+                            BloodGroup = 5,
+                            ConcurrencyStamp = "55b5d348-6f0b-4d50-a270-83163225d083",
+                            CreatedAt = new DateTime(2022, 11, 25, 18, 0, 8, 685, DateTimeKind.Local).AddTicks(8116),
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "admin",
+                            Gender = 0,
+                            IsActivated = true,
+                            IsDeleted = false,
+                            LastName = "admin",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEK+z5KG4X5Hfrv8tqswSGuHPqho4j4mqNr+foUao8RgTKBbrXEOzN1J9J+M3aGEV8w==",
+                            PhoneNumber = "123456789",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "GK75FVQWVXNYSY76CMXAWR6TWYXOJHD4",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("HMS.Core.Entities.Doctor", b =>
@@ -137,18 +168,28 @@ namespace HMS.Data.DAL.Migrations
 
             modelBuilder.Entity("HMS.Core.Entities.DoctorPatient", b =>
                 {
-                    b.Property<int>("PatientId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.HasKey("PatientId", "DoctorId");
+                    b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("DoctorPatient");
                 });
@@ -198,6 +239,29 @@ namespace HMS.Data.DAL.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4f93cf95-d9dc-49ee-9cd2-411c309eafe5",
+                            ConcurrencyStamp = "7ebf1dce-81b3-48af-8c4a-9cb1b7280f50",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "30861f84-9bdd-4178-bb53-371883e974d6",
+                            ConcurrencyStamp = "b7376b7e-2649-4964-8373-78bd8ff3440a",
+                            Name = "Doctor",
+                            NormalizedName = "DOCTOR"
+                        },
+                        new
+                        {
+                            Id = "0334e6df-aa49-4cea-9435-1866976b392a",
+                            ConcurrencyStamp = "7800b43b-5533-484c-8be2-995e7cd9ba21",
+                            Name = "Patient",
+                            NormalizedName = "PATIENT"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

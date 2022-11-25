@@ -75,8 +75,22 @@
                     </li>
                 </ul>
             </div>
-
-            <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Görüş təyin</span> et</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="DashBoard" asp-action="Index">
+                    @User.Identity.Name
+                </a>
+                <a asp-controller="Account" asp-action="Logout">
+                   Logout
+                </a>
+            }
+            else
+            {   <a asp-controller="Account" asp-action="Login">
+                    Login
+                </a>
+                
+            }
+           
         </div>
     </div>
 
@@ -124,16 +138,16 @@
                     </div>
                 </div>
 
-                <div class="col-lg-9 col-md-6">
-                    <!-- insert map -->
-                    <!-- using a responsive iframe -->
-                    <div class="responsive-map-container">
-                        <!-- place the iframe code between here... -->
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1737.6221882978507!2d-98.48650795000005!3d29.421653200000023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865c58aa57e6a56f%3A0xf08a9ad66f03e879!2sHenry+B.+Gonzalez+Convention+Center!5e0!3m2!1sen!2sus!4v1393884854786" width="640" height="480" frameborder="0" style="border:0"></iframe>
-                        <!-- ... and here -->
-                    </div>
-                    <!-- /insert map -->
-                </div>
+                @* <div class="col-lg-9 col-md-6"> *@
+                @*     <!-- insert map --> *@
+                @*     <!-- using a responsive iframe --> *@
+                @*     <div class="responsive-map-container"> *@
+                @*         <!-- place the iframe code between here... --> *@
+                @*         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1737.6221882978507!2d-98.48650795000005!3d29.421653200000023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865c58aa57e6a56f%3A0xf08a9ad66f03e879!2sHenry+B.+Gonzalez+Convention+Center!5e0!3m2!1sen!2sus!4v1393884854786" width="640" height="480" frameborder="0" style="border:0"></iframe> *@
+                @*         <!-- ... and here --> *@
+                @*     </div> *@
+                @*     <!-- /insert map --> *@
+                @* </div> *@
 
 
             </div>
@@ -165,6 +179,7 @@
 
 <script src="~/assets/owl-carousel/owl-carousel files/owl.carousel.min.js"></script>
 <script src="~/assets/owl-carousel/main.js"></script>
+<script src="https://kit.fontawesome.com/3818e49a5f.js" crossorigin="anonymous"></script>
 
 </body>
 </html>

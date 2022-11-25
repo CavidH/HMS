@@ -2,19 +2,41 @@ using FluentValidation.AspNetCore;
 using HMS.Business.Services.Implementations;
 using HMS.Business.Services.Interfaces;
 using HMS.Business.Validators;
+using HMS.Core.Abstracts;
 using HMS.Core.Entities;
 using HMS.Data.DAL;
+using HMS.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
+#region Logger
+
+Log.Logger = new LoggerConfiguration()
+    //.MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.File(
+        Path.Combine("Logs", "Log.txt"),
+        rollingInterval: RollingInterval.Day,
+        fileSizeLimitBytes: 10 * 1024 * 1024,
+        retainedFileCountLimit: 30,
+        rollOnFileSizeLimit: true,
+        shared: true,
+        flushToDiskInterval: TimeSpan.FromSeconds(2))
+    .WriteTo.Console()
+    //.WriteTo.Seq("http://localhost:5341")
+    .CreateLogger();
+
+#endregion
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-
+ 
 #region DataBase
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -83,7 +105,7 @@ builder.Services.AddFluentValidation(p =>
 #endregion
 
 #region UnitOfWork
-
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUnitOfWorkService, UnitOfWorkService>();
 
 #endregion

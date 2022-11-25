@@ -17,10 +17,13 @@ namespace HMS.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            if (User?.Identity?.IsAuthenticated == true)
+                return RedirectToAction("Index", "Home");
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(UserRegisterVM userRegisterVm)
         {
             if (!ModelState.IsValid) return View(userRegisterVm);
@@ -28,7 +31,7 @@ namespace HMS.Controllers
 
             try
             {
-                await _unitOfWorkService.userService.CreateAsync(userRegisterVm);
+                await _unitOfWorkService.UserService.CreateAsync(userRegisterVm);
             }
             catch (RegisterException ex)
             {
@@ -42,17 +45,50 @@ namespace HMS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public IActionResult Login()
+        {
+            if (User?.Identity?.IsAuthenticated == true)
+                return RedirectToAction("Index", "Home");
+            return View();
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(UserLoginVM userLoginVm)
+        {
+  
+            
+            if (!ModelState.IsValid)
+            {
+                return View(userLoginVm);
+            }
 
+            try
+            {
+                await _unitOfWorkService.UserService.LoginAsync(userLoginVm);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return RedirectToAction("Index", "DashBoard");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _unitOfWorkService.UserService.LogOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
 
 
         public async Task<IActionResult> Roll()
         {
-            await _unitOfWorkService.userService.CreateRollAsync();
+            await _unitOfWorkService.UserService.CreateRollAsync();
             return Content("Okeydir");
         }
-
-
-
     }
 }

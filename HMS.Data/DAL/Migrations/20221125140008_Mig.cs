@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HMS.Data.DAL.Migrations
 {
-    public partial class asaa : Migration
+    public partial class Mig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,6 +34,7 @@ namespace HMS.Data.DAL.Migrations
                     Gender = table.Column<int>(type: "int", nullable: false),
                     BloodGroup = table.Column<int>(type: "int", nullable: false),
                     IsActivated = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -203,13 +204,15 @@ namespace HMS.Data.DAL.Migrations
                 name: "DoctorPatient",
                 columns: table => new
                 {
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
-                    PatientId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false),
+                    PatientId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DoctorPatient", x => new { x.PatientId, x.DoctorId });
+                    table.PrimaryKey("PK_DoctorPatient", x => x.Id);
                     table.ForeignKey(
                         name: "FK_DoctorPatient_Doctor_DoctorId",
                         column: x => x.DoctorId,
@@ -221,6 +224,21 @@ namespace HMS.Data.DAL.Migrations
                         principalTable: "Patient",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "0334e6df-aa49-4cea-9435-1866976b392a", "7800b43b-5533-484c-8be2-995e7cd9ba21", "Patient", "PATIENT" },
+                    { "30861f84-9bdd-4178-bb53-371883e974d6", "b7376b7e-2649-4964-8373-78bd8ff3440a", "Doctor", "DOCTOR" },
+                    { "4f93cf95-d9dc-49ee-9cd2-411c309eafe5", "7ebf1dce-81b3-48af-8c4a-9cb1b7280f50", "Admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "BloodGroup", "ConcurrencyStamp", "CreatedAt", "Detail", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActivated", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "87c397d1-6f89-49b0-a382-8a8896edee22", 0, 5, "55b5d348-6f0b-4d50-a270-83163225d083", new DateTime(2022, 11, 25, 18, 0, 8, 685, DateTimeKind.Local).AddTicks(8116), null, "admin@gmail.com", false, "admin", 0, true, "admin", true, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEK+z5KG4X5Hfrv8tqswSGuHPqho4j4mqNr+foUao8RgTKBbrXEOzN1J9J+M3aGEV8w==", "123456789", false, "GK75FVQWVXNYSY76CMXAWR6TWYXOJHD4", false, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -271,6 +289,11 @@ namespace HMS.Data.DAL.Migrations
                 name: "IX_DoctorPatient_DoctorId",
                 table: "DoctorPatient",
                 column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DoctorPatient_PatientId",
+                table: "DoctorPatient",
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patient_AppUserId",

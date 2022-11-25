@@ -1,9 +1,5 @@
 ﻿using HMS.Business.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HMS.Core.Entities;
 
 namespace HMS.Business.Services.Interfaces
 {
@@ -11,10 +7,12 @@ namespace HMS.Business.Services.Interfaces
     {
         //Task<List<ApplicationUser>> GetAllAsync();
         //Task<Paginate<ApplicationUser>> GetAllPaginatedAsync(int page);
-        Task Login(UserLoginVM userLoginVm);
-        Task LogOut();
+        Task LoginAsync(UserLoginVM userLoginVm);
+        Task LogOutAsync();
+        Task<AppUser> GetUserByIdAsync(string id);
 
         Task CreateRollAsync();
+
         //Task<ApplicationUser> GetAsync(int id);
         Task CreateAsync(UserRegisterVM userRegisterVm);
         //Task Update(int id, UserPostVM userPostVM);

@@ -1,9 +1,14 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace HMS.Core.Entities
 {
     public class DoctorPatient
     {
-        public int Id { get; set; }
+        [Key]
+        public int Id{ get; set; }
+
+        public bool IsDeleted { get; set; }
 
 
 

@@ -8,7 +8,8 @@ namespace HMS.Data.ModelConfiguration
     {
         public void Configure(EntityTypeBuilder<DoctorPatient> builder)
         {
-            builder.HasKey(x => new { x.PatientId, x.DoctorId });
+            builder.Property(p => p.IsDeleted).HasDefaultValue(false);
+
 
             builder.HasOne(p => p.Doctor)
                 .WithMany(dp => dp.DoctorPatients)
