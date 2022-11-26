@@ -76,6 +76,15 @@ namespace HMS.Controllers
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             List<Doctor> doctors = await _unitOfWorkService.DoctorService.GetPatientDoctorsAsync(userId);
             return View(doctors);
+        } 
+        [Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> DocPatients()
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            IEnumerable<Patient> patients = await _unitOfWorkService
+                .PatientService
+                .GetDoctorPatientsAsync(userId);
+            return View( patients);
         }
     }
 }

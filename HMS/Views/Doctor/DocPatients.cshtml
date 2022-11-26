@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Patient>
+@{
+    int num = 1;
+}
+<div class="content-page container mt-5">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="admin-panel container-fluid">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body table-responsive">
+                            <h4 class="m-t-0 header-title mb-4">
+                                <b> Reg Doctors</b>
+
+
+                            </h4>
+                            @if (TempData["AlertErr"] is not null)
+                            {
+                                <div class="alert alert-danger">
+                                    <strong>@TempData["AlertErr"].ToString()</strong>
+                                </div>
+                            }
+                            <table id="datatable-buttons" class="table table-striped table-bordered table-hover dt-responsive nowrap mt-4" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+
+                                <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>FullName</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>BloodGroup</th>
+                                    <th>Gender</th>
+                                    <th>Detail</th>
+                                    <th>Setting</th>
+
+                                </tr>
+                                </thead>
+
+                                <tbody>
+
+                                @foreach (var patient in Model)
+                                {
+                                    <tr>
+                                        <td>@num </td>
+                                        <td>@((patient.AppUser.FirstName + " " + patient.AppUser.LastName).ToUpper())</td>
+                                        <td>@patient.AppUser.Email</td>
+                                        <td>@patient.AppUser.PhoneNumber</td>
+                                        <td>@patient.AppUser.BloodGroup</td>
+                                        <td>@patient.AppUser.Gender</td>
+                                        <td>@patient.AppUser.Detail</td>
+
+                                        <td>
+
+                                            <a class="btn btn-danger" asp-action="RemoveDoctor" asp-route-id="@patient.Id">
+                                                -
+                                            </a>
+
+                                        </td>
+
+                                    </tr>
+                                    num++;
+                                }
+
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- end container-fluid -->
+
+    </div>
+
+
+</div>

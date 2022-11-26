@@ -1,6 +1,9 @@
-﻿namespace HMS.Business.Services.Interfaces
+﻿using HMS.Core.Entities;
+
+namespace HMS.Business.Services.Interfaces
 {
     public interface IPatientService
     {
+        Task<IEnumerable<Patient>> GetDoctorPatientsAsync(string docId);
     }
 }

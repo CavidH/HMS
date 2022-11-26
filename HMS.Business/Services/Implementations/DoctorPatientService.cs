@@ -31,8 +31,8 @@ namespace HMS.Business.Services.Implementations
 
             DoctorPatient doctorPatient = await _unitOfWork.DoctorPatientRepository
                 .GetAsync(p => p.DoctorId == doctorId && p.PatientId == patient.Id&&p.IsDeleted==false);
-            doctorPatient.IsDeleted = true;
-           await _unitOfWork.DoctorPatientRepository.SaveAsync();
+            doctorPatient.IsDeleted = true; 
+           await _unitOfWork.SaveAsync();
         }
     }
 }

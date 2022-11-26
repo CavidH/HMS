@@ -40,6 +40,6 @@ namespace HMS.Business.Services.Implementations
         public IDoctorPatientService DoctorPatientService =>
             _doctorPatientService ??= new DoctorPatientService(_unitOfWork);
 
-        public IPatientService PatientService => _patientService ??= new PatientService();
+        public IPatientService PatientService => _patientService ??= new PatientService(_unitOfWork);
     }
 }
