@@ -228,17 +228,17 @@ namespace HMS.Data.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "0334e6df-aa49-4cea-9435-1866976b392a", "7800b43b-5533-484c-8be2-995e7cd9ba21", "Patient", "PATIENT" },
-                    { "30861f84-9bdd-4178-bb53-371883e974d6", "b7376b7e-2649-4964-8373-78bd8ff3440a", "Doctor", "DOCTOR" },
-                    { "4f93cf95-d9dc-49ee-9cd2-411c309eafe5", "7ebf1dce-81b3-48af-8c4a-9cb1b7280f50", "Admin", "ADMIN" }
-                });
+                values: new object[] { "0334e6df-aa49-4cea-9435-1866976b392a", "7800b43b-5533-484c-8be2-995e7cd9ba21", "Patient", "PATIENT" });
 
             migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "BloodGroup", "ConcurrencyStamp", "CreatedAt", "Detail", "Email", "EmailConfirmed", "FirstName", "Gender", "IsActivated", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "87c397d1-6f89-49b0-a382-8a8896edee22", 0, 5, "55b5d348-6f0b-4d50-a270-83163225d083", new DateTime(2022, 11, 25, 18, 0, 8, 685, DateTimeKind.Local).AddTicks(8116), null, "admin@gmail.com", false, "admin", 0, true, "admin", true, null, "ADMIN@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEK+z5KG4X5Hfrv8tqswSGuHPqho4j4mqNr+foUao8RgTKBbrXEOzN1J9J+M3aGEV8w==", "123456789", false, "GK75FVQWVXNYSY76CMXAWR6TWYXOJHD4", false, "admin" });
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "30861f84-9bdd-4178-bb53-371883e974d6", "b7376b7e-2649-4964-8373-78bd8ff3440a", "Doctor", "DOCTOR" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "4f93cf95-d9dc-49ee-9cd2-411c309eafe5", "7ebf1dce-81b3-48af-8c4a-9cb1b7280f50", "Admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

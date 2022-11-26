@@ -1,22 +1,52 @@
 ﻿@model UserLoginVM  
-<div class="form__container ">
-    @* <div asp-validation-summary="All" class="d-flex justify-content-center"></div> *@
-    <form asp-action="Login" class="form__control">
-
-        <input asp-for="Email" placeholder="Enter your Email adress">
-        <span asp-validation-for="Email" class="text-danger"></span>
-
-        <input asp-for="Password" placeholder="Enter your Password">
-        <span asp-validation-for="Password" class="text-danger"></span>
-        <div class="direct__login">
-            <input asp-for="RememberMe">
-            <label for="check">RememberMe</label>
+<section class=" gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Login</h3>
+                        @* <div asp-validation-summary="All" class="d-flex justify-content-center"></div> *@
+                        <form asp-action="Login">
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="Email">Email</label>
+                                        <input asp-for="Email" type="email" id="Email" class="form-control form-control-lg"/>
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="password">Password</label>
+                                        <input asp-for="Password" type="password" id="password" class="form-control form-control-lg"/>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            @* <div class="row"> *@
+                            @*     <div class="col-md-12 mb-4"> *@
+                            @* *@
+                            @*         <input asp-for="RememberMe" class="form-check-input me-2" type="checkbox" value="" id="RememberMe"/> *@
+                            @*         <label class="form-check-label" for="RememberMe"> *@
+                            @*             Remember Me *@
+                            @*         </label> *@
+                            @*     </div> *@
+                            @* </div> *@
+                            <div class="mt-4 pt-2">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Login"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</section>
 
 
-        <button type="submit">Login</button>
-    </form>
-</div>
 <script src="~/lib/jquery/jquery.min.js"></script>
 <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

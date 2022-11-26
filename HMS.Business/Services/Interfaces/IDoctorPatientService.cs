@@ -3,6 +3,5 @@
     public interface IDoctorPatientService
     {
         public Task CreateAsync(string userId ,int doctorId);
-        public Task RemoveAsync(string userId ,int doctorId);
     }
 }

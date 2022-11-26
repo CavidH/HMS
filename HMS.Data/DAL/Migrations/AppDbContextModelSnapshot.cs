@@ -116,32 +116,6 @@ namespace HMS.Data.DAL.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "87c397d1-6f89-49b0-a382-8a8896edee22",
-                            AccessFailedCount = 0,
-                            BloodGroup = 5,
-                            ConcurrencyStamp = "55b5d348-6f0b-4d50-a270-83163225d083",
-                            CreatedAt = new DateTime(2022, 11, 25, 18, 0, 8, 685, DateTimeKind.Local).AddTicks(8116),
-                            Email = "admin@gmail.com",
-                            EmailConfirmed = false,
-                            FirstName = "admin",
-                            Gender = 0,
-                            IsActivated = true,
-                            IsDeleted = false,
-                            LastName = "admin",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEK+z5KG4X5Hfrv8tqswSGuHPqho4j4mqNr+foUao8RgTKBbrXEOzN1J9J+M3aGEV8w==",
-                            PhoneNumber = "123456789",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "GK75FVQWVXNYSY76CMXAWR6TWYXOJHD4",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("HMS.Core.Entities.Doctor", b =>

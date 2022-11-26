@@ -1,9 +1,9 @@
 ﻿namespace HMS.Business.Exceptions
 {
 
-    public class UserNotFoundExceptionException : Exception
+    public class UserNotFoundException : Exception
     {
-        public UserNotFoundExceptionException(string msg) : base(msg) { }
+        public UserNotFoundException(string msg) : base(msg) { }
 
     }
 }

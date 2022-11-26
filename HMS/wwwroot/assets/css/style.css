@@ -1710,3 +1710,36 @@ nav{
 /*--------------------------------------------------------------
 # Footer End
 --------------------------------------------------------------*/
+#Doctors{
+  margin-top: 320px !important;
+}
+
+/*
+register page
+
+*/
+.gradient-custom {
+  
+  background: #afafaf29;
+  /*background-repeat: repeat-y;*/
+
+ 
+}
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+  font-size: 1rem;
+  line-height: 2.15;
+  padding-left: .75em;
+  padding-right: .75em;
+}
+.card-registration .select-arrow {
+  top: 13px;
+}
+
+
+ 
+
+.green-border-focus .form-control:focus {
+  border: 1px solid rgba(58, 136, 238, 0.78);
+  box-shadow: 0 0 0 0.2rem rgba(79, 143, 227, 0.73);
+}

@@ -2,13 +2,12 @@
 using HMS.Business.Exceptions;
 using HMS.Business.Services.Interfaces;
 using HMS.Core.Entities;
-using HMS.Core.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace HMS.Controllers
 {
-    [Authorize]
     public class DoctorController : Controller
     {
         private readonly IUnitOfWorkService _unitOfWorkService;
@@ -16,6 +15,35 @@ namespace HMS.Controllers
         public DoctorController(IUnitOfWorkService unitOfWorkService)
         {
             _unitOfWorkService = unitOfWorkService;
+        }
+
+        public async Task<IActionResult> AllDoc()
+        {
+            List<Doctor> doctors = await _unitOfWorkService.DoctorService.GetAllAsync();
+            return View(doctors);
+        }
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            if (id == 0) return NotFound();
+            Doctor doctor;
+            try
+            {
+                doctor = await _unitOfWorkService.DoctorService.GetByIdAsync(id);
+            }
+            catch (UserNotFoundException ex)
+            {
+              
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"User Detail Error ID ," +
+                          $"userIp:{HttpContext.Connection.RemoteIpAddress?.ToString()} ," +
+                          $" Exception Detail :{ex.Message}");
+                return View("/Views/Error/ErrorPage.cshtml");
+            }
+            return View(doctor);
         }
 
         [Authorize]
@@ -40,11 +68,12 @@ namespace HMS.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                //todo log
-                Console.WriteLine(e);
-                throw;
+                Log.Error($"Add doctor Error   ," +
+                          $"userIp:{HttpContext.Connection.RemoteIpAddress?.ToString()} ," +
+                          $" Exception Detail :{ex.Message}");
+                return View("/Views/Error/ErrorPage.cshtml");
             }
 
             TempData["Alert"] = "Added";
@@ -57,13 +86,14 @@ namespace HMS.Controllers
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             try
             {
-                await _unitOfWorkService.DoctorPatientService.RemoveAsync(userId, id);
+                await _unitOfWorkService.DoctorService.RemoveAsync(userId, id);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                //todo log
-                Console.WriteLine(e);
-                throw;
+                Log.Error($"RemoveDoctor doctor Error   ," +
+                          $"userIp:{HttpContext.Connection.RemoteIpAddress?.ToString()} ," +
+                          $" Exception Detail :{ex.Message}");
+                return View("/Views/Error/ErrorPage.cshtml");
             }
 
             TempData["AlertErr"] = "Deleted";
@@ -76,7 +106,8 @@ namespace HMS.Controllers
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             List<Doctor> doctors = await _unitOfWorkService.DoctorService.GetPatientDoctorsAsync(userId);
             return View(doctors);
-        } 
+        }
+
         [Authorize(Roles = "Doctor")]
         public async Task<IActionResult> DocPatients()
         {
@@ -84,7 +115,7 @@ namespace HMS.Controllers
             IEnumerable<Patient> patients = await _unitOfWorkService
                 .PatientService
                 .GetDoctorPatientsAsync(userId);
-            return View( patients);
+            return View(patients);
         }
     }
 }

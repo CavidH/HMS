@@ -1,6 +1,9 @@
-﻿using HMS.Business.Exceptions;
+﻿using System.Security.Claims;
+using HMS.Business.Exceptions;
 using HMS.Business.Services.Interfaces;
 using HMS.Business.ViewModels;
+using HMS.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
@@ -23,6 +26,18 @@ namespace HMS.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Detail()
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            AppUser user = await _unitOfWorkService.UserService.GetUserByIdAsync(userId);
+            return View(user);
+        }
+
+        public IActionResult AccessDenied() => View();
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(UserRegisterVM userRegisterVm)
@@ -41,8 +56,10 @@ namespace HMS.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
-            }
+                Log.Error($"Register Problem Email:{userRegisterVm.Email}," +
+                          $"userIp:{HttpContext.Connection.RemoteIpAddress?.ToString()} ," +
+                          $" Exception Detail :{ex.Message}");
+                return View("/Views/Error/ErrorPage.cshtml");            }
 
             return RedirectToAction("Index", "DashBoard");
         }
@@ -77,11 +94,14 @@ namespace HMS.Controllers
                 ModelState.AddModelError("Password", ex.Message);
                 return View(userLoginVm);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                //todo log
-                Console.WriteLine(e);
-                throw;
+                Log.Error($"Login Problem  user inputs Email:{userLoginVm.Email}," +
+                          $" passvord: {userLoginVm.Password} " +
+                          $"userIp:{HttpContext.Connection.RemoteIpAddress?.ToString()} ," +
+                          $" Exception Detail :{ex.Message}");
+                return View("/Views/Error/ErrorPage.cshtml");
+              
             }
 
             return RedirectToAction("Index", "DashBoard");
@@ -95,10 +115,10 @@ namespace HMS.Controllers
         }
 
 
-        public async Task<IActionResult> Roll()
-        {
-            await _unitOfWorkService.UserService.CreateRollAsync();
-            return Content("Okeydir");
-        }
+        // public async Task<IActionResult> Roll()
+        // {
+        //     await _unitOfWorkService.UserService.CreateRollAsync();
+        //     return Content("Okeydir");
+        // }
     }
 }

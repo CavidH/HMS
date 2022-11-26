@@ -1,0 +1,54 @@
+﻿@model Doctor   
+<section id="AllDoctors">
+    <div class="container my-5">
+        <div class="doctor">
+            <div class="row">
+                <div class="col-lg-6">
+                    <img style="width: 500px; height: 500px;" src="~/assets/images/Unknown_person.jpg" alt="Doc1">
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="doctor-info">
+
+                        <h2 class="my-5 doctor-name">
+                            <span class="font-weight-bold">Ad:</span> <span class="font-weight-light">@Model.AppUser.FirstName</span>
+                        </h2>
+                        <h2 class="my-5 doctor-name">
+                            <span class="font-weight-bold">SoyAd:</span> <span class="font-weight-light">@Model.AppUser.LastName</span>
+                        </h2>
+                        <h2 class="my-5 doctor-profession">
+                            <span class="font-weight-bold">Email:</span> <span class="font-weight-light">@Model.AppUser.Email</span>
+                        </h2>
+                        <h2 class="my-5 doctor-profession">
+                            <span class="font-weight-bold">Phone:</span> <span class="font-weight-light">@Model.AppUser.PhoneNumber</span>
+                        </h2>
+                        <h2 class="my-5 doctor-profession">
+
+                            <span class="font-weight-bold">Gender:</span> <span class="font-weight-light">@Model.AppUser.Gender</span>
+                        </h2>
+                        <h2 class="my-5 doctor-profession">
+
+                            <span class="font-weight-bold">BloodGroup:</span> <span class="font-weight-light">@Model.AppUser.BloodGroup</span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-6">
+                    <div class="doctor-info">
+                        <h3 class="my-5 doctor-name">
+                            <span class="font-weight-bold">Detail: </span>
+
+                        </h3>
+                        <p>@Model.AppUser.Detail</p>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>

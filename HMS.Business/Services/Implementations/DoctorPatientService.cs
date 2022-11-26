@@ -25,14 +25,5 @@ namespace HMS.Business.Services.Implementations
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task RemoveAsync(string userId, int doctorId)
-        {
-            Patient patient = await _unitOfWork.PatientRepository.GetAsync(p => p.AppUserId == userId);
-
-            DoctorPatient doctorPatient = await _unitOfWork.DoctorPatientRepository
-                .GetAsync(p => p.DoctorId == doctorId && p.PatientId == patient.Id&&p.IsDeleted==false);
-            doctorPatient.IsDeleted = true; 
-           await _unitOfWork.SaveAsync();
-        }
     }
 }

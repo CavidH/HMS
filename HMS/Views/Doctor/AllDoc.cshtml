@@ -1,0 +1,38 @@
+﻿@model List<Doctor>
+<section id="Doctors">
+    <div class="container my-5">
+        <div class="row">
+            @foreach (Doctor doctor in Model)
+            {
+                <div class="col-lg-3 my-3 col-md-6 d-flex align-items-stretch">
+                    <div class="member" data-aos="fade-up" data-aos-delay="100">
+                        <div class="member-img">
+                            <a  asp-controller="Doctor" asp-action="Detail" asp-route-id="@doctor.Id" >
+                                <img src="~/assets/images/Unknown_person.jpg" class="img-fluid" alt="">
+                            </a>
+
+                            <div class="social">
+                                <a href="#" class="twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="facebook">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                                <a href="#" class="instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="youtube">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                                <h4>@(doctor.AppUser.FirstName+" "+doctor.AppUser.LastName)</h4>
+                                                          <span>@doctor.AppUser.Email</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,56 @@
+﻿@model List<CoronaStat>  
+@{ int num = 1; }
+
+<link rel="stylesheet" href="~/assets/css/tablestyle.css">
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h2 class="heading-section">Covid 19 Statistics</h2>
+            </div>
+        </div>
+        @if (Model is not null)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead class="thead-primary">
+                            <tr>
+                                <th>#</th>
+                                <th>Country</th>
+                                <th>Last Update</th>
+                                <th>Total Cases</th>
+                                <th>Total Deaths</th>
+                                <th>Total Recovered</th>
+                            </tr>
+                            </thead >
+                            <tbody class="content_corona">
+                            @foreach (var coronaStat in @Model)
+                            {
+                                <tr>
+                                    <th scope="row">@num</th>
+                                    <td>@coronaStat.Country_text</td>
+                                    <td>@coronaStat.LastUpdate</td>
+                                    <td>@coronaStat.TotalCases_text</td>
+                                    <td>@coronaStat.TotalDeaths_text</td>
+                                    <td>@coronaStat.TotalRecovered_text</td>
+                                </tr>
+                                num++;
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row justify-content-center">
+
+                <h2 style="color: red">Too Many Requests :) Please Check Again in 2 Minutes</h2><br>
+            </div>
+        }
+    </div>
+</section>
+ 

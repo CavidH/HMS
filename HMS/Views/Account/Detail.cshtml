@@ -1,0 +1,30 @@
+﻿@model AppUser
+<section id="why-us" class="why-us">
+    <div class="container my-5">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-4 d-flex align-items-stretch">
+                <div class="content">
+                    <div class="profile__box d-flex align-center flex-column">
+                        <img class="img-thumbnail rounded-circle mx-auto align-center" style="width:120px; height:120px; " src="~/assets/images/Unknown_person.jpg"alt="">
+                        <h2 class="mt-4" style="font-size: 24px; text-align: center; ">@((Model.FirstName + " " + Model.LastName).ToUpper()) </h2>
+                    </div>
+                    <p style="font-size: 18px; margin-top: 10px;">
+                        @* User : @if(User.IsInRole(UserRoles.Doctor)) *@
+                        Email: @Model.Email<br>
+                        Phone: @Model.PhoneNumber<br>
+                        Gender: @Model.Gender<br>
+                        Blood Group: @Model.BloodGroup<br>
+                        Detail : 
+                        <br> @Model.Detail
+                    </p>
+                    <div class="text-center">
+                        <a  asp-controller="DashBoard" asp-action="Index" style="font-size: 16px;" class="more-btn">Back <i class="bx bx-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+</section>

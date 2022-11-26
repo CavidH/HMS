@@ -4,10 +4,11 @@ using HMS.Business.Services.Interfaces;
 using HMS.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace HMS.Controllers
 {
-    [Authorize /*(Roles = "Patient")*/]
+    [Authorize]
     public class DashBoardController : Controller
     {
         private readonly IUnitOfWorkService _unitOfWorkService;
@@ -25,13 +26,18 @@ namespace HMS.Controllers
             {
                 user = await _unitOfWorkService.UserService.GetUserByIdAsync(userId);
             }
-            catch (UserNotFoundExceptionException ex)
+            catch (UserNotFoundException ex)
             {
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
-                //todo log
+                Log.Error($"User ID{userId}," +
+                          $"userIp:{HttpContext.Connection.RemoteIpAddress?.ToString()} ," +
+                          $" Exception Detail :{ex.Message}");
+                return View("/Views/Error/ErrorPage.cshtml");
+
+
             }
 
             return View(user);

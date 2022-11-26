@@ -93,7 +93,7 @@ namespace HMS.Business.Services.Implementations
         {
             AppUser user = await _userManager.FindByIdAsync(id);
             if (user is null)
-                throw new UserNotFoundExceptionException(id + " - Not Found ");
+                throw new UserNotFoundException(id + " - Not Found ");
 
             return user;
         }

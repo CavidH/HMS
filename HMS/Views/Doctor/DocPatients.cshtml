@@ -13,7 +13,7 @@
                     <div class="card">
                         <div class="card-body table-responsive">
                             <h4 class="m-t-0 header-title mb-4">
-                                <b> Reg Doctors</b>
+                                <b>Doctor Patients</b>
 
 
                             </h4>
@@ -41,29 +41,31 @@
 
                                 <tbody>
 
-                                @foreach (var patient in Model)
+                                @if (Model is not null)
                                 {
-                                    <tr>
-                                        <td>@num </td>
-                                        <td>@((patient.AppUser.FirstName + " " + patient.AppUser.LastName).ToUpper())</td>
-                                        <td>@patient.AppUser.Email</td>
-                                        <td>@patient.AppUser.PhoneNumber</td>
-                                        <td>@patient.AppUser.BloodGroup</td>
-                                        <td>@patient.AppUser.Gender</td>
-                                        <td>@patient.AppUser.Detail</td>
+                                    @foreach (var patient in Model)
+                                    {
+                                        <tr>
+                                            <td>@num </td>
+                                            <td>@((patient.AppUser.FirstName + " " + patient.AppUser.LastName).ToUpper())</td>
+                                            <td>@patient.AppUser.Email</td>
+                                            <td>@patient.AppUser.PhoneNumber</td>
+                                            <td>@patient.AppUser.BloodGroup</td>
+                                            <td>@patient.AppUser.Gender</td>
+                                            <td>@patient.AppUser.Detail</td>
 
-                                        <td>
+                                            <td>
 
-                                            <a class="btn btn-danger" asp-action="RemoveDoctor" asp-route-id="@patient.Id">
-                                                -
-                                            </a>
+                                                <a class="btn btn-danger" asp-controller="Patient" asp-action="Remove" asp-route-id="@patient.Id">
+                                                    -
+                                                </a>
 
-                                        </td>
+                                            </td>
 
-                                    </tr>
-                                    num++;
+                                        </tr>
+                                        num++;
+                                    }
                                 }
-
 
 
 
